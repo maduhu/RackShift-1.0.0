@@ -125,19 +125,20 @@ function dnsValidator(rule, value, callback) {
     if (value === '' || !value) {
         callback();
     } else {
-        if (typeof value == Array) {
-            for (let i = 0; i < value.length; i++) {
-                if (!/\w+.\w+/.test(value[i]) && !/^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/.test(value[i])) {
+        if (value.length)
+            if (typeof value == Array) {
+                for (let i = 0; i < value.length; i++) {
+                    if (!/\w+.\w+/.test(value[i]) && !/^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/.test(value[i])) {
+                        callback(new Error(rule.vue.$t('invalid_format')));
+                        return;
+                    }
+                }
+            } else {
+                if (!/\w+.\w+/.test(value) && !/^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/.test(value)) {
                     callback(new Error(rule.vue.$t('invalid_format')));
                     return;
                 }
             }
-        } else {
-            if (!/\w+.\w+/.test(value) && !/^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/.test(value)) {
-                callback(new Error(rule.vue.$t('invalid_format')));
-                return;
-            }
-        }
     }
     callback();
 }
